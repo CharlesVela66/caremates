@@ -34,7 +34,6 @@ export function DialogButton({ onTaskCreated }: { onTaskCreated: () => void }) {
 
   const createTask = async () => {
     const task = { name, description, status };
-    console.log(task);
     try {
       const response = await fetch('/api/tasks', {
         method: 'POST',
@@ -46,7 +45,6 @@ export function DialogButton({ onTaskCreated }: { onTaskCreated: () => void }) {
       }
 
       const newTask = await response.json();
-      console.log('Task created successfully:', newTask);
 
       setIsOpen(false);
       toast({

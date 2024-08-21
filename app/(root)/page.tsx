@@ -6,7 +6,6 @@ import { DialogButton } from '@/components/DialogButton';
 import { ProgressBar } from '@/components/ProgressBar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-//import { getSession } from '@/app/api/auth/route';
 import { Task } from '@/types';
 import { TabsContent } from '@radix-ui/react-tabs';
 import { getCookie } from 'cookies-next';

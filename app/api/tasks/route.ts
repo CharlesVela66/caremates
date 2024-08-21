@@ -35,8 +35,6 @@ export const POST = async (req: NextRequest) => {
       status,
     });
 
-    console.log(newTask);
-
     await newTask.save();
 
     return new NextResponse(JSON.stringify(newTask), { status: 201 });
