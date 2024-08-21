@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 
-declare type User = {
+export type User = {
   firstName: string;
   lastName: string;
 };
 
 export type Task = {
   id: string;
+  name: string;
   description: string;
-  status: 'pending' | 'processing' | 'success' | 'failed';
+  status: 'completed' | 'not_completed';
 };

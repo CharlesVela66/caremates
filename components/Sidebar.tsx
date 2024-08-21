@@ -1,3 +1,4 @@
+import { User } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -8,22 +9,24 @@ const Sidebar = ({ firstName, lastName }: User) => {
       <nav className="flex flex-col gap-4">
         <Link href="/" className="mb-12 cursor-pointer items-center gap-2">
           <Image
-            src="/next.svg"
+            src="/CareMatesLogo.svg"
             alt="menu icon"
-            width={34}
-            height={34}
-            className="flex size-[24px] max-xl:size-14"
+            width={200}
+            height={200}
+            className="flex"
           />
-          <h1 className="sidebar-logo">Caremates</h1>
         </Link>
         <Link href="/" className="sidebar-link">
-          <Image src="logo.svg" alt="My Tasks logo" width={24} height={24} />
+          <Image src="tasks.svg" alt="My Tasks logo" width={32} height={32} />
           <h2 className="sidebar-label">My Tasks</h2>
         </Link>
       </nav>
-      <h2 className="text-slate-900">
-        {firstName}, {lastName}
-      </h2>
+      <div className="flex gap-3 items-center md:px-2 2xl:px-3 rounded-lg">
+        <Image src="/profile.svg" alt="Profile" width={32} height={32} />
+        <h2 className="text-slate-900 font-semibold ">
+          {firstName}, {lastName}
+        </h2>
+      </div>
     </section>
   );
 };
