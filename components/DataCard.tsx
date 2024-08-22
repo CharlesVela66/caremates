@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/card';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -23,30 +22,38 @@ import { useToast } from './ui/use-toast';
 
 const DataCard = ({
   data,
-  onTaskCreated,
+  onTaskDeleted,
 }: {
   data: Task;
-  onTaskCreated: () => void;
+  onTaskDeleted: () => void;
 }) => {
+  // Definition of toast to give input to the user
   const { toast } = useToast();
 
+  // Function to delete the task
   const deleteTask = async (id: string) => {
+    // Pop up message to confirm deletion
     const hasConfirmed = confirm('Are you sure you want to delete this task?');
+    // If the user confirmed the deletion
     if (hasConfirmed) {
       try {
+        // Call the method DELETE fromt the API
         const response = await fetch(`/api/tasks/${id}`, {
           method: 'DELETE',
         });
 
+        // If the response wasn't successful then send error
         if (!response.ok) {
           throw new Error('Failed to delete task');
         }
+
+        // If the response was successful then send toast
         toast({
           title: 'Task deleted successfully',
           description: 'The task has been removed from the list.',
         });
         // Fetch the updated list of tasks
-        onTaskCreated();
+        onTaskDeleted();
       } catch (error) {
         toast({
           title: 'Oops! The task could not be created',
@@ -62,6 +69,7 @@ const DataCard = ({
           <CardTitle className="capitalize">
             {data.name.replace(/_/g, ' ')}
           </CardTitle>
+          {/* Actions button */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

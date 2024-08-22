@@ -1,9 +1,21 @@
+import { getSession } from '@/app/api/auth/route';
 import { User } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const Sidebar = ({ firstName, lastName }: User) => {
+const Sidebar = async () => {
+  const session = await getSession();
+  let firstName;
+  let lastName;
+  if (session && session.user) {
+    firstName = session.user.firstName;
+    lastName = session.user.lastName;
+    // Use firstName and lastName as needed
+  } else {
+    // Handle the case where the session is null or doesn't have a user
+    console.error('Session is null or does not contain user information');
+  }
   return (
     <section className="sidebar">
       <nav className="flex flex-col gap-4">

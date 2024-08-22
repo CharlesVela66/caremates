@@ -40,21 +40,27 @@ import { useState } from 'react';
 
 export function DataTable({
   data,
-  onTaskCreated,
+  onTaskDeleted,
 }: {
   data: Task[];
-  onTaskCreated: () => void;
+  onTaskDeleted: () => void;
 }) {
+  // Definition of toast to give input to the user
   const { toast } = useToast();
 
+  // useState to set the sorting criteria
   const [sorting, setSorting] = useState<SortingState>([]);
+  // useState to set the filters for the columns
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  // useState to set the visibility of the filters depending on their filters
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  // useState to select specific rows
   const [rowSelection, setRowSelection] = useState({});
 
   const columns: ColumnDef<Task>[] = [
     {
       id: 'select',
+      // Set the header for the table with a checkbox than when ticked then all the rows are selected
       header: ({ table }) => (
         <Checkbox
           checked={
@@ -65,6 +71,7 @@ export function DataTable({
           aria-label="Select all"
         />
       ),
+      // Set the row with checkboxes than when ticked then the row gets selected
       cell: ({ row }) => (
         <Checkbox
           checked={row.getIsSelected()}
@@ -76,6 +83,7 @@ export function DataTable({
       enableHiding: false,
     },
     {
+      // Set the column for the status
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => (
@@ -85,6 +93,7 @@ export function DataTable({
       ),
     },
     {
+      // Set the column for the name
       accessorKey: 'name',
       header: 'Name',
       cell: ({ row }) => (
@@ -92,6 +101,7 @@ export function DataTable({
       ),
     },
     {
+      // Set the column for the description
       accessorKey: 'description',
       header: 'Description',
       cell: ({ row }) => (
@@ -101,28 +111,36 @@ export function DataTable({
       ),
     },
     {
+      // Set the column for the actions button
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => {
+        // Function to delete the task
         const deleteTask = async (id: string) => {
+          // Pop up message to confirm deletion
           const hasConfirmed = confirm(
             'Are you sure you want to delete this task?'
           );
+          // If the user confirmed the deletion
           if (hasConfirmed) {
             try {
+              // Call the method DELETE fromt the API
               const response = await fetch(`/api/tasks/${id}`, {
                 method: 'DELETE',
               });
 
+              // If the response wasn't successful then send error
               if (!response.ok) {
                 throw new Error('Failed to delete task');
               }
 
+              // If the response was successful then send toast
               toast({
                 title: 'Task deleted successfully',
                 description: 'The task has been removed from the list.',
               });
-              onTaskCreated();
+              // Fetch the updated list of tasks
+              onTaskDeleted();
             } catch (error) {
               toast({
                 title: 'Oops! The task could not be created',
@@ -135,6 +153,7 @@ export function DataTable({
 
         return (
           <DropdownMenu>
+            {/* When the actions button gets clicked, then show the menu to delete the task */}
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-4 p-0">
                 <span className="sr-only">Open menu</span>
@@ -177,9 +196,9 @@ export function DataTable({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter by name..."
-          value={(table.getColumn('status')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('status')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

@@ -67,7 +67,7 @@ const Home = () => {
     <section className="home-content">
       {/* Header section */}
       <div className="home-title flex justify-between">
-        <h1>Welcome, Carlos</h1>
+        <h1>Welcome </h1>
         <Link href="/sign-in">
           <Button>Log out</Button>
         </Link>
@@ -93,7 +93,7 @@ const Home = () => {
           </div>
           {/* Display the table for tabs=table */}
           <TabsContent value="table" className="w-full">
-            <DataTable data={tasks} onTaskCreated={fetchTasks} />
+            <DataTable data={tasks} onTaskDeleted={fetchTasks} />
           </TabsContent>
           {/* Display the card section for tabs=cards */}
           <TabsContent value="cards" className="w-full mt-12 ">
@@ -103,7 +103,7 @@ const Home = () => {
                   <DataCard
                     data={task}
                     key={task.id}
-                    onTaskCreated={() => fetchTasks()}
+                    onTaskDeleted={() => fetchTasks()}
                   />
                 ))}
               </div>
