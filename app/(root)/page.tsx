@@ -67,7 +67,7 @@ const Home = () => {
     <section className="home-content">
       {/* Header section */}
       <div className="home-title flex justify-between">
-        <h1>Welcome </h1>
+        <h1>Welcome Back!</h1>
         <Link href="/sign-in">
           <Button>Log out</Button>
         </Link>
