@@ -1,4 +1,4 @@
-import { getSession } from '@/app/api/auth/route';
+import { getSession } from '@/app/api/auth/auth';
 import { User } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';

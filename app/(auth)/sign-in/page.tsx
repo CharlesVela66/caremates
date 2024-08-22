@@ -1,4 +1,4 @@
-import { login } from '@/app/api/auth/route';
+import { login } from '@/app/api/auth/auth';
 import { Button } from '@/components/ui/button';
 import {
   Card,

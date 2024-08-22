@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSession, updateSession } from './app/api/auth/route';
+import { getSession, updateSession } from './app/api/auth/auth';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
