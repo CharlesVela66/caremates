@@ -5,13 +5,14 @@ import { cookies } from 'next/headers';
 // Secret key for signing and verifying JWTs
 const secretKey = process.env.SECRET;
 const key = new TextEncoder().encode(secretKey);
+const EXPIRATION_TIME = 30 * 60 * 1000;
 
 // Function to encrypt payload into a JWT
 export async function encrypt(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm
     .setIssuedAt() // Set the issued at time
-    .setExpirationTime('10 sec from now') // Set the expiration time
+    .setExpirationTime(`${EXPIRATION_TIME / 1000}s`) // Set the expiration time
     .sign(key); // Sign the JWT with the key
 }
 
@@ -33,7 +34,7 @@ export async function login(formData: FormData) {
   };
 
   // Create the session with an expiration time
-  const expires = new Date(Date.now() + 10 * 1000);
+  const expires = new Date(Date.now() + EXPIRATION_TIME);
   const session = await encrypt({ user, expires });
 
   // Save the session in a cookie
@@ -61,7 +62,7 @@ export async function updateSession(request: NextRequest) {
 
   // Refresh the session expiration time
   const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 10 * 1000);
+  parsed.expires = new Date(Date.now() + EXPIRATION_TIME);
   const res = NextResponse.next();
   res.cookies.set({
     name: 'session',

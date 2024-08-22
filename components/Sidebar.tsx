@@ -17,7 +17,7 @@ const Sidebar = async () => {
     console.error('Session is null or does not contain user information');
   }
   return (
-    <section className="sidebar">
+    <section className="sidebar md:w-64 lg:w-72">
       <nav className="flex flex-col gap-4">
         <Link href="/" className="mb-12 cursor-pointer items-center gap-2">
           <Image
@@ -35,7 +35,7 @@ const Sidebar = async () => {
       </nav>
       <div className="flex gap-3 items-center md:px-2 2xl:px-3 rounded-lg">
         <Image src="/profile.svg" alt="Profile" width={32} height={32} />
-        <h2 className="text-slate-900 font-semibold ">
+        <h2 className="text-slate-900 font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
           {firstName}, {lastName}
         </h2>
       </div>
